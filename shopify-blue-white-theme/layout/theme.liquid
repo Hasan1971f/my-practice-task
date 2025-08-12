@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <title>{{ page_title }}{% if current_tags %} – {{ current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} – Page {{ current_page }}{% endif %}{% if shop.name %} – {{ shop.name }}{% endif %}</title>
+    <link rel="canonical" href="{{ canonical_url }}">
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    <style>
+      :root { --color-primary: {{ settings.primary_color | default: '#0d6efd' }}; }
+    </style>
+    {{ content_for_header }}
+  </head>
+  <body>
+    <a class="skip-to-content" href="#MainContent">Skip to content</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        {% if settings.logo != blank %}
+          <a class="logo" href="{{ routes.root_url }}">
+            <img src="{{ settings.logo | img_url: '200x' }}" alt="{{ shop.name }}">
+          </a>
+        {% else %}
+          <a class="logo" href="{{ routes.root_url }}">{{ shop.name }}</a>
+        {% endif %}
+        <nav class="nav">
+          <a href="{{ routes.root_url }}">Home</a>
+          <a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
+        </nav>
+      </div>
+    </header>
+    <main id="MainContent" class="container">
+      {{ content_for_layout }}
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <p>© {{ 'now' | date: '%Y' }} {{ shop.name }}</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<h1>Your cart</h1>
+{% if cart.item_count == 0 %}
+  <p>Your cart is empty.</p>
+  <p><a class="btn" href="{{ routes.root_url }}">Continue shopping</a></p>
+{% else %}
+  <form action="{{ routes.cart_url }}" method="post" novalidate class="cart-form">
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart.items %}
+          <tr>
+            <td class="cart-product">
+              <a href="{{ item.url }}">
+                {% if item.image %}
+                  <img src="{{ item.image | img_url: '120x' }}" alt="{{ item.image.alt | escape }}">
+                {% endif %}
+                <span>{{ item.product.title }}</span>
+                {% unless item.variant.title contains 'Default' %}
+                  <small class="variant">{{ item.variant.title }}</small>
+                {% endunless %}
+              </a>
+            </td>
+            <td>{{ item.price | money }}</td>
+            <td>
+              <input class="qty-input" type="number" name="updates[{{ item.key }}]" min="0" value="{{ item.quantity }}">
+            </td>
+            <td>{{ item.line_price | money }}</td>
+            <td><a class="link-remove" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0">Remove</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="cart-summary">
+      <p class="subtotal"><strong>Subtotal:</strong> {{ cart.total_price | money }}</p>
+      <div class="cart-actions">
+        <button type="submit" class="btn" name="update">Update cart</button>
+        <button type="submit" class="btn btn-primary" name="checkout">Checkout</button>
+      </div>
+      <p class="note">Taxes and shipping calculated at checkout.</p>
+    </div>
+  </form>
+{% endif %}

@@ -1,0 +1,45 @@
+<section class="hero">
+  <div class="hero-inner container">
+    <h1>Welcome to {{ shop.name }}</h1>
+    <p>Discover our latest products.</p>
+  </div>
+</section>
+
+{% assign front = collections['frontpage'] %}
+{% assign all_collection = collections['all'] %}
+{% assign product_list = front.products %}
+{% if product_list.size == 0 and all_collection %}
+  {% assign product_list = all_collection.products %}
+{% endif %}
+
+{% if product_list.size > 0 %}
+  <section class="product-grid container">
+    <h2>Featured products</h2>
+    <div class="grid">
+      {% for product in product_list limit: 8 %}
+        <article class="card">
+          <a href="{{ product.url | within: front }}">
+            {% if product.featured_image %}
+              <img loading="lazy" src="{{ product.featured_image | img_url: '540x' }}" alt="{{ product.featured_image.alt | escape }}">
+            {% else %}
+              <div class="placeholder-image">No image</div>
+            {% endif %}
+            <h3>{{ product.title }}</h3>
+            <p class="price">
+              {% if product.compare_at_price > product.price %}
+                <span class="price-current">{{ product.price | money }}</span>
+                <s class="price-compare">{{ product.compare_at_price | money }}</s>
+              {% else %}
+                {{ product.price | money }}
+              {% endif %}
+            </p>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% else %}
+  <div class="container">
+    <p>No products found. Add products to your store.</p>
+  </div>
+{% endif %}
