@@ -42,8 +42,8 @@ img { max-width: 100%; display: block; }
 }
 
 .site-header {
-  background: #fff;
-  border-bottom: 1px solid #e6eefc;
+  background: var(--color-primary);
+  border-bottom: 0;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -54,17 +54,17 @@ img { max-width: 100%; display: block; }
   justify-content: space-between;
   height: 64px;
 }
-.logo { color: var(--color-primary); text-decoration: none; font-weight: 700; font-size: 1.125rem; }
+.logo { color: #fff; text-decoration: none; font-weight: 700; font-size: 1.125rem; }
 .logo img { height: 36px; width: auto; display: block; }
 
 .nav { display: flex; gap: 1rem; }
 .nav a {
-  color: var(--color-muted);
+  color: rgba(255,255,255,0.92);
   text-decoration: none;
   padding: 0.5rem 0.25rem;
   border-radius: 6px;
 }
-.nav a:hover { color: var(--color-primary); background: rgba(13,110,253,0.08); }
+.nav a:hover { color: #fff; background: rgba(255,255,255,0.18); }
 
 .site-footer {
   margin-top: 3rem;
