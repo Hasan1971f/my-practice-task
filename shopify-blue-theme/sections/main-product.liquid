@@ -1,0 +1,47 @@
+<section class="product">
+  <div class="container product-grid">
+    <div class="product-media">
+      {% if product.featured_image %}
+        <img
+          src="{{ product.featured_image | image_url: width: 1024 }}"
+          alt="{{ product.title | escape }}"
+          class="product-image"
+          loading="eager"
+        >
+      {% endif %}
+    </div>
+    <div class="product-info">
+      <h1 class="product-title">{{ product.title }}</h1>
+      {% render 'price', product: product %}
+
+      {% form 'product', product, class: 'product-form' %}
+        {% unless product.has_only_default_variant %}
+          {% for option in product.options_with_values %}
+            <label class="select-label" for="Option-{{ section.id }}-{{ forloop.index }}">{{ option.name }}</label>
+            <select id="Option-{{ section.id }}-{{ forloop.index }}" name="options[{{ option.name }}]" class="select">
+              {% for value in option.values %}
+                <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+              {% endfor %}
+            </select>
+          {% endfor %}
+        {% endunless %}
+
+        <button type="submit" name="add" class="btn btn-primary" {% unless product.available %}disabled{% endunless %}>
+          {% if product.available %}Add to cart{% else %}Sold out{% endif %}
+        </button>
+      {% endform %}
+
+      <div class="product-description rte">
+        {{ product.description }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main product",
+  "settings": [],
+  "presets": [ { "name": "Product" } ]
+}
+{% endschema %}

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page_title %}{{ page_title }}{% else %}{{ shop.name }}{% endif %}</title>
+  {{ content_for_header }}
+  <style>
+    :root {
+      --color-primary: {{ settings.primary_color | default: '#0d6efd' }};
+      --color-primary-hover: {{ settings.primary_hover_color | default: '#0b5ed7' }};
+    }
+  </style>
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+</head>
+<body>
+  <a class="skip-to-content" href="#MainContent">Skip to content</a>
+  {% section 'header' %}
+  <main id="MainContent" role="main">
+    {{ content_for_layout }}
+  </main>
+  {% section 'footer' %}
+  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+</body>
+</html>

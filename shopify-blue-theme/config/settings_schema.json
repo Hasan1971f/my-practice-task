@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Theme settings",
+    "settings": [
+      { "type": "color", "id": "primary_color", "label": "Primary blue", "default": "#0d6efd" },
+      { "type": "color", "id": "primary_hover_color", "label": "Primary blue (hover)", "default": "#0b5ed7" }
+    ]
+  }
+]
